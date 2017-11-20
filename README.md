@@ -5,21 +5,33 @@ This example app, `forward_amd.py`, uses the [Flask](http://flask.pocoo.org/) Py
 
 ## Installation
 Clone or unzip this repository into your project directory.  If you're using a [Virtual Environment](https://virtualenv.pypa.io/en/stable/userguide/), do the following in your project directory:
-    virtualenv ENV
-    source ENV/bin/activate
+```
+virtualenv ENV
+source ENV/bin/activate
+```
 Install the required Python libraries:
-    pip install requirements.txt
+```
+pip install requirements.txt
+```
 We're going to use an [Ngrok](https://ngrok.com/) tunnel to allow you to run the web app behind a firewall, which conveniently provides a public URL for Twilio's webhook requests:
-    ngrok http 5000
+```
+ngrok http 5000
+```
 This command opens an HTTP tunnel to localhost port 5000:
+
 ![ngrok tunnel](https://user-images.githubusercontent.com/920404/32996073-f1481694-cd4b-11e7-81ea-3f8cf8af6860.png)
+
 Make a note of one of the Ngrok URLs and use it to configure the webhook for the inbound calls:
+
 ![twilio config](https://user-images.githubusercontent.com/920404/32996465-2ab8473c-cd51-11e7-827c-396956259db8.png)
 
 ## Configuring the App
 The app configuration is stored in `config.py`.  It's here where you set your Twilio credentials, the server name, the forwarding number, and the caller id to use.  As a convenience, we call the Ngrok local API to discover the external URLs (HTTP and HTTPS) for the tunnel, and extract the server name from them.  
 
-If you point your web browser to the `/index` URL, you can update the running configuration to set the called id and destination number: ![index page](https://user-images.githubusercontent.com/920404/32999664-5f401384-cd71-11e7-9719-9e36cad6d39e.png)
+If you point your web browser to the `/index` URL, you can update the running configuration to set the called id and destination number:
+
+![index page](https://user-images.githubusercontent.com/920404/32999664-5f401384-cd71-11e7-9719-9e36cad6d39e.png)
+
 Leaving the caller id blank will cause the app to use the incoming caller id.
 
 ## A Note on Caller Id
