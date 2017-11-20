@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Response>
+  <Say voice="alice">Connecting your call</Say>
+  <Dial><Conference endConferenceOnExit="true">{{ inbound_sid }}</Conference></Dial>
+</Response>

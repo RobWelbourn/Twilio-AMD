@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <head>
+        <title>Connect Calls With AMD</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    </head>
+    <body>
+        <form action="/index" method="POST">
+            Caller Id:<br>
+            <input type="text" name="CallerId" value="{{ caller_id }}"><br>
+            Destination Number:<br>
+            <input type="text" name="DestNum" value="{{ dest_num }}"><br>
+            <input type="submit" value="Update">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Response>
+  <Say voice="alice">The called party is not available.  Please try again later.  Goodbye.</Say>
+  <Hangup/>
+</Response>
