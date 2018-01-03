@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script>
+    // Socket is created once the document is loaded.
+    var socket = null;
+
+    // Respond to changes in the 'Online' checkboxes by updating Taskrouter via WebSocket.
+    function update_online(worker_sid, checkbox) {
+        console.log("Worker: " + worker_sid + "; online = " + checkbox.checked);
+        socket.emit('status update', {worker_sid: worker_sid, online: checkbox.checked});      
+    } 
+
+    $(document).ready(function() {
+        // We'll use the default (unnamed) namespace to communicate with the server over a WebSocket.
+        namespace = '';
+        socket = io.connect(
+            location.protocol + '//' + document.domain + ':' + location.port + '/' + namespace,
+            {transports: ['websocket']}
+        );
+
+        // Transform the agent state description into the corresponding CSS class name.
+        function get_state_class(description) {
+            switch (description) {
+                case 'Temporarily Unavailable': return 'Unavailable';
+                default: return description;
+            }
+        }
+
+        // Act on the status update message.  Note that we rely on there being a CSS class name
+        // that is the same as the worker activity name to highlight the agent status appropriately.
+        socket.on('status update', function(status_json) {
+            console.log(status_json);
+            var status = JSON.parse(status_json);
+            var activity_selector = "#activity_" + status.worker_sid;
+            var row_selector = "#row_" + status.worker_sid;
+            var online_selector = "#online_" + status.worker_sid;
+            $(activity_selector).text(status.activity_name);
+            $(online_selector).prop('checked', status.activity_name != "Offline");
+            $(row_selector).removeClass(get_state_class(status.previous_activity_name))
+                           .addClass(get_state_class(status.activity_name));
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="grid">
+    <h1>Agent Dashboard</h1>
+    <div class="row">
+        <div class="col"><h2>Agent</h2></div>
+        <div class="col"><h2>Phone Number</h2></div>
+        <div class="col"><h2>Status</h2></div>
+        <div class="col"><h2>Set Online?</h2></div>
+    </div>
+    {% for agent in agents %}
+        <div class="row {{ agent.activity_name }}" id="row_{{ agent.sid }}">
+            <div class="col">
+                <p>{{ agent.name }}</p>
+            </div>
+            <div class="col">
+                <p>{{ agent.phone }}</p>
+            </div>
+            <div class="col">
+                <p id="activity_{{ agent.sid }}">{{ agent.activity_name }}</p>
+            </div>
+            <div class="col">
+                <input type="checkbox" id="online_{{ agent.sid }}" 
+                    onchange="update_online('{{ agent.sid }}', this)"
+                    {% if agent.online %} checked {% endif %}>
+                </input>
+            </div>       
+        </div>
+    {% endfor %}     
+</div>
+{% endblock %}

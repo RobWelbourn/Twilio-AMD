@@ -1,17 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-    <meta charset="UTF-8">
-    <head>
-        <title>Connect Calls With AMD</title>
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    </head>
-    <body>
-        <form action="/index" method="POST">
-            Caller Id:<br>
-            <input type="text" name="CallerId" value="{{ caller_id }}"><br>
-            Destination Number:<br>
-            <input type="text" name="DestNum" value="{{ dest_num }}"><br>
-            <input type="submit" value="Update">
-        </form>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script>
+    $(document).ready(function() {
+        // We'll use the default (unnamed) namespace to communicate with the server over a WebSocket.
+        namespace = '';
+        socket = io.connect(
+            location.protocol + '//' + document.domain + ':' + location.port + '/' + namespace,
+            {transports: ['websocket']}
+        );
+
+        // Act on the status update message.
+        socket.on('status update', function(status_json){
+            console.log(status_json);
+            var status = JSON.parse(status_json);
+            $('#caller_id').text(status.caller_id);
+            $('#call_status').text(status.call_status);
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="grid">
+    <h1>AMD Dashboard</h1>
+    <form action="/index" method="POST">
+        <div class="row">
+            <div class="col"><p></p></div><!-- for spacing  -->
+        </div>
+        <div class="row">
+            <div class="col"><p>Call from:</p></div>
+            <div class="col"><p id="caller_id"></p></div>
+        </div>
+        <div class="row">
+            <div class="col"><p>Destination Number:</p></div>
+            <div class="col"><input type="text" name="DestNum" value="{{ dest_num }}"></div>
+            <div class="col"><p id="call_status"></p></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"><input type="submit" value="Update"></div>
+        </div>        
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+* {
+    box-sizing: border-box;
+    font-family: Calibri, sans-serif;
+}
+
+ /* * {
+    border: 1px solid red !important;
+} */
+
+h1 {
+    background-color: blue;
+    color: white;
+    margin: 0px;
+    padding: 25px;
+    font-weight: normal;
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom-style: solid;
+    border-width: 1px;
+    margin-bottom: 0px;
+}
+
+p {
+    font-size: 14px;
+    margin: 0px;
+    padding: 3px 0px 0px;
+}
+
+input {
+    font-size: 14px;
+}
+
+.grid {
+    max-width: 800px;
+    width: 100%;
+}
+
+.row {
+    width: 100%;
+    margin-bottom: 4px;
+    padding: 5px 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.underlined {
+    border-bottom-style: solid;
+    border-width: 1px;
+}
+
+.col {
+    width: 25%;
+    padding: 0px 10px;
+}
+
+.doublecol {
+    width: 50%;
+    padding: 0px 10px;
+}
+
+/* These class names must correspond exactly to the TaskRouter worker states. */
+.Idle {
+    background-color: lightgreen;
+}
+.Reserved, .Unavailable {
+    background-color: gold;
+}
+.Busy {
+    background-color: lightpink;
+}
+.Offline {
+    background-color: white;
+}
