@@ -21,11 +21,11 @@ ngrok http 5000
 ```
 This command opens an HTTP tunnel to localhost port 5000:
 
-![ngrok tunnel](https://user-images.githubusercontent.com/920404/32996073-f1481694-cd4b-11e7-81ea-3f8cf8af6860.png)
+<img width="579" alt="ngrok" src="https://user-images.githubusercontent.com/920404/32996073-f1481694-cd4b-11e7-81ea-3f8cf8af6860.png">
 
 Make a note of one of the Ngrok URLs and use it to configure the webhook for the inbound calls, using the path  `/inbound`:
 
-![twilio config](https://user-images.githubusercontent.com/920404/32996465-2ab8473c-cd51-11e7-827c-396956259db8.png)
+<img width="753" alt="twilio" src="https://user-images.githubusercontent.com/920404/32996465-2ab8473c-cd51-11e7-827c-396956259db8.png">
 
 Be aware that if you're using the free version of Ngrok, then the tunnel URL will change each time you run the `ngrok` command.
 
