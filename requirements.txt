@@ -16,7 +16,7 @@ MarkupSafe==1.0
 mccabe==0.6.1
 PyJWT==1.5.3
 PySocks==1.6.7
-python-engineio==2.0.1
+python-engineio==3.8.2.post1
 python-socketio==1.8.4
 pytz==2017.3
 requests==2.18.4
